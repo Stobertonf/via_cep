@@ -14,7 +14,11 @@ class _HomePageState extends State<HomePage> {
   bool _enableField = true;
   late String _result;
 
-
+ @override
+  void dispose() {
+    _searchCepController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             _searchCep(),
-           
+           _searchCepButton(),
           ],
         ),
       ),

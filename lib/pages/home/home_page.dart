@@ -53,6 +53,9 @@ Future<void> _searchCep(BuildContext context) async {
     showErrorSnackbar('Cep Inválido!!!');
   }
 }
+  
+  }
+}
 
   void _showSnackbar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(

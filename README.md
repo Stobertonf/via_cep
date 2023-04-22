@@ -10,7 +10,7 @@
 
 ## Escopo
 
-📚 Neste curso, eu vou ter a oportunidade de fazer um app para consumir a API do Via Cep, para evoluir meu conhecimento de Testes com Mock e HTTP.
+📚 Neste curso, eu vou ter a oportunidade de fazer um app para consumir a API do Via Cep, para evoluir meu conhecimento de Testes e HTTP.
 
 
 ## Foco

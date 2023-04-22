@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:via_cep/models/ceps.dart';
+import 'package:via_cep/shared/snackBar.dart';
 import 'package:via_cep/services/ceps_services.dart';
 
 
@@ -15,45 +16,80 @@ class _HomePageState extends State<HomePage> {
   Cep? _cep;
   final _formKey = GlobalKey<FormState>();
   final _cepController = TextEditingController();
+  
+  
 
-  Future<void> _searchCep() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        final cep = await CepService.fetchCep(cep: _cepController.text);
-        setState(() {
-          _cep = cep;
-        });
-      } on PlatformException catch (error) {
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: const Text('Erro'),
-            content: Text(error.message ?? 'Erro desconhecido'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      } catch (error) {
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: const Text('Erro'),
-            content: const Text('Cep inválido, verifique novamente!!!'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
-    }
+  
+ @override
+  void dispose() {
+    _cepController.dispose();
+    super.dispose();
   }
+
+  void _handleSearchCep() {
+  _searchCep(context);
+}
+
+
+
+Future<void> _searchCep(BuildContext context) async {
+  if (_cepController.text.isEmpty) {
+    _showSnackbar(context, 'Por favor, digite um CEP.');
+    return;
+  }
+
+  try {
+    final cep = await CepService.fetchCep(cep: _cepController.text);
+    setState(() {
+      _cep = cep;
+    });
+    showSuccessSnackbar();
+  } on CepNotFound catch (error) {
+    await CepService.saveLastCep(_cepController.text);
+    showErrorSnackbar(error.message);
+  } on PlatformException catch (error) {
+    showErrorSnackbar(error.message ?? 'Erro desconhecido');
+  } catch (error) {
+    showErrorSnackbar('Cep Inválido!!!');
+  }
+}
+  
+  }
+}
+
+  void _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+ void showSuccessSnackbar() {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      backgroundColor: Colors.green,
+      content: Text(
+        'CEP encontrado com sucesso!',
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+  );
+}
+
+void showErrorSnackbar(String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: Colors.red,
+      content: Text(
+        message,
+        style: const TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +123,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _searchCep,
+                onPressed: _handleSearchCep,
                 child: const Text('Buscar'),
               ),
               if (_cep != null) ...[

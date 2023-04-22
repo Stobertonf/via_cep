@@ -44,5 +44,11 @@ Widget _searchCep() {
       enabled: _enableField,
     );
   }
+
+   Widget _circularLoading() {
+    return const CircularProgressIndicator(
+      value: 15.0,
+    );
+  }
  
 }

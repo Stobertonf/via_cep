@@ -50,5 +50,24 @@ Widget _searchCep() {
       value: 15.0,
     );
   }
+
+  Widget _searchCepButton() {
+    Widget buttonContent = _loading
+        ? _circularLoading()
+        : const Text('Consultar');
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: ElevatedButton(
+        onPressed: _searchCep,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: buttonContent,
+      ),
+    );
+  }
  
 }

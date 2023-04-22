@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           context: context,
           builder: (_) => AlertDialog(
             title: const Text('Erro'),
-            content: const Text('Erro desconhecido'),
+            content: const Text('Cep inválido, verifique novamente!!!'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),

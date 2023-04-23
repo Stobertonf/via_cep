@@ -85,11 +85,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> saveLastCep(String cep) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_lastCepKey, cep);
-  }
-
   Future<String?> getLastCep() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(_lastCepKey);
@@ -132,67 +127,68 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.blue[900],
-          title: const Text(
-            'Consulta CEP',
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.blue[900],
+        title: const Text(
+          'Consulta CEP',
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _cepController,
+                decoration: InputDecoration(
+                  labelText: 'Digite o CEP',
+                  labelStyle: TextStyle(
+                    color: Colors.blue[900] ?? Colors.blue[900],
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.blue[900] ?? Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'O CEP é obrigatório';
+                  } else if (value.length != 8) {
+                    return 'O CEP deve ter 8 dígitos';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _handleSearchCep,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue[900],
+                ),
+                child: const Text('Buscar Cep'),
+              ),
+              if (_cep != null) ...[
+                const SizedBox(height: 16),
+                Text('Endereço: ${_cep!.logradouro}'),
+                Text('Bairro: ${_cep!.bairro}'),
+                Text('Cidade/UF: ${_cep!.localidade} / ${_cep!.uf}'),
+                Text('Complemento: ${_cep!.complemento}'),
+                Text('Localidade: ${_cep!.localidade}'),
+                Text('Ibge: ${_cep!.ibge}'),
+              ],
+            ],
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: _cepController,
-                  decoration: InputDecoration(
-                    labelText: 'Digite o CEP',
-                    labelStyle: TextStyle(
-                      color: Colors.blue[900] ?? Colors.blue[900],
-                    ),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue[900] ?? Colors.black,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'O CEP é obrigatório';
-                    } else if (value.length != 8) {
-                      return 'O CEP deve ter 8 dígitos';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: _handleSearchCep,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue[900],
-                  ),
-                  child: const Text('Buscar Cep'),
-                ),
-                if (_cep != null) ...[
-                  const SizedBox(height: 16),
-                  Text('Endereço: ${_cep!.logradouro}'),
-                  Text('Bairro: ${_cep!.bairro}'),
-                  Text('Cidade/UF: ${_cep!.localidade} / ${_cep!.uf}'),
-                  Text('Complemento: ${_cep!.complemento}'),
-                  Text('Localidade: ${_cep!.localidade}'),
-                  Text('Ibge: ${_cep!.ibge}'),
-                ],
-              ],
-            ),
-          ),
-        ));
+      ),
+    );
   }
 }

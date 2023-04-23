@@ -4,6 +4,9 @@ import 'package:via_cep/models/ceps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CepService {
+  
+  static const String _lastCepKey = 'last_cep'; 
+
   static Future<Cep> fetchCep({required String cep}) async {
     final response =
         await http.get(Uri.parse('https://viacep.com.br/ws/$cep/json/'));

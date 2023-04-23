@@ -28,8 +28,6 @@ class _HomePageState extends State<HomePage> {
     _searchCep(context);
   }
 
-  
-
   Future<void> _searchCep(BuildContext context) async {
     if (_cepController.text.isEmpty) {
       _showSnackbar(context, 'Por favor, digite um CEP.');
@@ -64,7 +62,11 @@ class _HomePageState extends State<HomePage> {
               child: const Text('Cancelar'),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () async {
+                final cepService = CepService();
+                await cepService.saveLastCep(_cepController.text);
+                Navigator.of(context).pop(true);
+              },
               child: const Text('Cadastrar'),
             ),
           ],
@@ -73,12 +75,9 @@ class _HomePageState extends State<HomePage> {
     );
 
     if (result == true) {
-      await CepService.saveLastCep(_cepController.text);
       _showSnackbar(context, 'CEP cadastrado com sucesso!');
     }
   }
-
-  
 
   Future<void> saveLastCep(String cep) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -89,7 +88,6 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(_lastCepKey);
   }
-
 
   void _showSnackbar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -129,7 +127,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Consulta CEP'),
+          title: const Text(
+            'Consulta CEP',
+            textAlign: TextAlign.center,
+            style: TextStyle(),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -158,13 +160,20 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _handleSearchCep,
-                  child: const Text('Buscar'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black,
+                    onPrimary: Colors.white, 
+                  ),
+                  child: const Text(''),
                 ),
                 if (_cep != null) ...[
                   const SizedBox(height: 16),
                   Text('Endereço: ${_cep!.logradouro}'),
                   Text('Bairro: ${_cep!.bairro}'),
                   Text('Cidade/UF: ${_cep!.localidade} / ${_cep!.uf}'),
+                  Text('Complemento: ${_cep!.complemento}'),
+                  Text('Localidade: ${_cep!.localidade}'),
+                  Text('Ibge: ${_cep!.ibge}'),
                 ],
               ],
             ),

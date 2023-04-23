@@ -24,8 +24,11 @@
 ## Imagens
 
 <p float="left" align="center">
-  <img src="https://i.ibb.co/w08X8j7/Cadastro-Ceps.png alt="Imc-Dio" width="40%"/>
-  <img src="https://i.ibb.co/09Cs928/Consultar-Ceps.png alt="Imc-Dio" width="40%"/>
-  <img src="https://i.ibb.co/94w6PRb/Cadastro-Ceps-Error.png" alt="Imc-Dio-Message-Error"  width="40%"/> 
+  <img src="https://i.ibb.co/w08X8j7/Cadastro-Ceps.png" alt="Imc-Dio" width="40%"/>
+  <img src="https://i.ibb.co/09Cs928/Consultar-Ceps.png" alt="Imc-Dio" width="40%"/>
+  <img src="https://i.ibb.co/94w6PRb/Cadastro-Ceps-Error.png" alt="Imc-Dio-Message-Error"  width="40%"
+  <img src="https://i.ibb.co/09Cs928/Cep-Valido.png" alt="Imc-Dio" width="40%"
+  <img src="https://i.ibb.co/94w6PRb/Consultar-Cep-Invalido.png" alt="Imc-Dio-Message-Error"  width="40%"/>      
+
 </p>
 

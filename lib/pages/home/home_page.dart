@@ -30,7 +30,13 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _searchCep(BuildContext context) async {
     if (_cepController.text.isEmpty) {
-      _showSnackbar(context, 'Por favor, digite um CEP.');
+      backgroundColor:
+      Colors.deepPurple[900];
+      _showSnackbar(
+        context,
+        'Por favor, digite um CEP',
+      );
+
       return;
     }
 
@@ -127,10 +133,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.blue[900],
           title: const Text(
             'Consulta CEP',
-            textAlign: TextAlign.center,
-            style: TextStyle(),
           ),
         ),
         body: Padding(
@@ -142,8 +148,17 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextFormField(
                   controller: _cepController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Digite o CEP',
+                    labelStyle: TextStyle(
+                      color: Colors.blue[900] ?? Colors.blue[900],
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.blue[900] ?? Colors.black,
+                        width: 2.0,
+                      ),
+                    ),
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -161,10 +176,10 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   onPressed: _handleSearchCep,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    onPrimary: Colors.white, 
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue[900],
                   ),
-                  child: const Text(''),
+                  child: const Text('Buscar Cep'),
                 ),
                 if (_cep != null) ...[
                   const SizedBox(height: 16),

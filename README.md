@@ -27,7 +27,7 @@
   <img src="https://i.ibb.co/w08X8j7/Cadastro-Ceps.png" alt="Via-Cep" width="20%"/>
   <img src="https://i.ibb.co/09Cs928/Consultar-Ceps.png" alt="Via-Cep" width="20%"/>
   <img src="https://i.ibb.co/94w6PRb/Cadastro-Ceps-Error.png" alt="Via-Cep-Cadastro-Error"  width="20%"
-  <img src="https://i.ibb.co/09Cs928/Cep-Valido.png" alt="Via-Cep-Valido" width="20%"
+  <img src="[https://i.ibb.co/09Cs928/Cep-Valido.png](https://ibb.co/jLzhYC1)" alt="Via-Cep-Valido" width="20%"
   <img src="https://i.ibb.co/94w6PRb/Consultar-Cep-Invalido.png" alt="Via-Cep-Invalido"  width="20%"/>      
 
 </p>
